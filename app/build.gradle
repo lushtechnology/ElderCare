@@ -45,7 +45,7 @@ android {
         minSdkVersion 27
         targetSdkVersion 27
         def majorVersion = 1
-        def minorVersion = 2
+        def minorVersion = 0
         def patchNumber = 0
         versionCode majorVersion << 16 | minorVersion << 8 | patchNumber
         versionName "$majorVersion.$minorVersion.$patchNumber"
