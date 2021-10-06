@@ -1,0 +1,45 @@
+{
+  "name": "webapp",
+  "version": "4.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint",
+    "lintNoFix": "vue-cli-service lint --no-fix",
+    "refresh": "yarn install --check-files",
+    "test:e2e": "vue-cli-service test:e2e",
+    "testUnit": "vue-cli-service test:unit"
+  },
+  "dependencies": {
+    "axios": "^0.20.0",
+    "roboto-fontface": "0.10.0",
+    "vue": "^2.6.10",
+    "vue-class-component": "^7.2.6",
+    "vue-html-webpack-plugin": "^3.2.2",
+    "vue-property-decorator": "^9.0.2",
+    "vue-router": "^3.4.6",
+    "vuetify": "^2.3.13"
+  },
+  "devDependencies": {
+    "@cypress/webpack-preprocessor": "^5.4.6",
+    "@mdi/font": "^5.6.55",
+    "@vue/cli-plugin-babel": "^4.5.7",
+    "@vue/cli-plugin-e2e-cypress": "^4.5.7",
+    "@vue/cli-plugin-typescript": "^4.5.7",
+    "@vue/cli-plugin-unit-mocha": "^4.5.7",
+    "@vue/cli-service": "^4.5.7",
+    "material-design-icons-iconfont": "^6.1.0",
+    "sass": "^1.27.0",
+    "sass-loader": "^10.0.3",
+    "typescript": "^4.0.3",
+    "vue-cli-plugin-vuetify": "^2.0.7",
+    "vue-template-compiler": "^2.6.12",
+    "vuetify-loader": "^1.6.0"
+  },
+  "resolutions":{
+    "node-forge": "^0.10.0",
+    "minimist": "^1.2.3",
+    "lodash": "^4.17.19"
+  }
+}

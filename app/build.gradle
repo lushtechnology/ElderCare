@@ -1,0 +1,182 @@
+/*
+ * Copyright 2019-2020 by Security and Safety Things GmbH
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+apply plugin: 'com.android.application'
+apply plugin: 'com.jaredsburrows.license'
+
+android {
+    /**
+     * Compiles against Security and Safety Things SDK to make use of APIs provided by the operating system.
+     */
+    compileSdkVersion 'Security and Safety Things GmbH:Security and Safety Things APIs v5:27'
+    /**
+     * Disables app compression in order for the web server to access resources from within the packaged APK.
+     */
+    aaptOptions {
+        noCompress ''
+    }
+    /**
+     * This is to prevent build failures due to a linting error.
+     * The javax library references a package that is not included in android.
+     */
+    lintOptions {
+        lintConfig file("lint.xml")
+    }
+    defaultConfig {
+        manifestPlaceholders = [ applicationLabel: APP_NAME]
+        applicationId 'com.lushtech.eldercare.movinet'
+
+        /**
+         * 27 is the only supported version of the Security and Safety Things SDK.
+         */
+        minSdkVersion 27
+        targetSdkVersion 27
+        def majorVersion = 1
+        def minorVersion = 2
+        def patchNumber = 0
+        versionCode majorVersion << 16 | minorVersion << 8 | patchNumber
+        versionName "$majorVersion.$minorVersion.$patchNumber"
+        licenseReport {
+            generateHtmlReport = true
+            copyHtmlReportToAssets = true
+            generateJsonReport = false
+            copyJsonReportToAssets = false
+        }
+    }
+    signingConfigs {
+        /**
+         * Signing configs are needed to generate a release version of the apk.
+         * The following variables should be declared in your ~/.bashrc file, and should correspond to the values from:
+         *
+         * keytool -genkey -v -keystore <key_name>.keystore -alias alias_name -keyalg RSA -keysize 2048 -validity 10000
+         *
+         * SIGNING_KEY_ALIAS = value supplied for alias_name
+         * SIGNING_KEY_PASSWORD = value supplied when continuing the prompts from keytool -genkey
+         * SIGNING_KEYSTORE_PATH = absolute path to <key_name>.keystore
+         * SIGNING_KEYSTORE_PASSWORD = value supplied when continuing the prompts from keytool -genkey
+         */
+        release {
+            keyAlias System.getenv('SIGNING_KEY_ALIAS')
+            keyPassword System.getenv('SIGNING_KEY_PASSWORD')
+            def keystorePath = System.getenv('SIGNING_KEYSTORE_PATH')
+            if (keystorePath == null || keystorePath.isEmpty()) {
+                logger.warn('Path to keystore is invalid!')
+            } else {
+                storeFile file(keystorePath)
+            }
+            storePassword System.getenv('SIGNING_KEYSTORE_PASSWORD')
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+            versionNameSuffix '-release'
+        }
+        debug {
+            versionNameSuffix '-debug'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    /**
+     * Needed to access the webserver directory from the app/src/main/java source directory.
+     */
+    sourceSets {
+        main {
+            java.srcDirs = ['src/main/java', "$project.rootDir/webserver"]
+        }
+    }
+}
+
+dependencies {
+    /**
+     * Android Support Library v27 is used instead of AndroidX, because the Security and Safety
+     * Things SDK currently does not support AndroidX.
+     */
+    implementation 'com.android.support:appcompat-v7:27.1.1'
+    /**
+     * Used to work with our model
+     */
+    implementation 'org.tensorflow:tensorflow-lite:2.5.0'
+    implementation 'org.tensorflow:tensorflow-lite-gpu:2.5.0'
+
+    /**
+     * Used for annotations in RestEndpoint.java and the webserver source folder.
+     */
+    implementation 'javax.ws.rs:javax.ws.rs-api:2.1'
+    /**
+     * Below dependencies are required inside the webserver source folder.
+     */
+    implementation 'com.google.code.gson:gson:2.8.5'
+    implementation 'com.google.guava:guava:27.1-jre'
+
+    /**
+       Java StringUtilities
+     */
+    implementation "org.apache.commons:commons-lang3:3.11"
+
+    implementation 'com.securityandsafetythings.jumpsuite:datatrolley:3.1.0'
+
+
+}
+
+/**
+ * Adds a new variable to the generated BuildConfig file called WEBSITE_ASSET_PATH whose value is website.
+ */
+def websiteAssetPath = 'website'
+android.applicationVariants.all { variant ->
+    variant.buildConfigField 'String', 'WEBSITE_ASSET_PATH', "\"$websiteAssetPath\""
+}
+
+/**
+ * Copies the generated dist directory from the webapp submodule (generated from yarn build) into the android project's assets directory.
+ */
+task copyWebapp(type: Copy, dependsOn: ':webapp:yarn_build') {
+    from "${project(':webapp').projectDir}/dist/"
+    into "${project.projectDir}/src/main/assets/$websiteAssetPath"
+}
+
+/**
+ * Task generates the .env file for the webapp. The .env file is a vue file which contains variables. In this project, the .env
+ * file contains the BASE_URL variable, which is used to register the publicPath in vue.config.js. It also creates variables
+ * for the web page title, and the location of the favicon.
+ */
+task makeEnvFile()  {
+    doLast {
+        def BASE_URL="BASE_URL=/app/${android.defaultConfig.applicationId}/"
+        def WEB_PAGE_TITLE="VUE_APP_WEB_PAGE_TITLE=$APP_NAME"
+        def FAVICON="VUE_APP_FAVICON=../webapp/public/favicon.ico"
+        def webappDirectory = 'webapp'
+        def envFile = '.env'
+        delete "$project.rootDir/$webappDirectory/$envFile"
+        new File("$project.rootDir/$webappDirectory", "$envFile").text =
+                """$BASE_URL\n$WEB_PAGE_TITLE\n$FAVICON"""
+    }
+}
+
+task cleanWebAssets(type: Delete) {
+    delete "${project.projectDir}/src/main/assets/$websiteAssetPath"
+}
+
+preBuild.dependsOn(copyWebapp)
+clean.finalizedBy(':webapp:clean')
+clean.finalizedBy(cleanWebAssets)
+
+apply from: "$project.rootDir/scripts/osslicenses/osslicenses.gradle"
