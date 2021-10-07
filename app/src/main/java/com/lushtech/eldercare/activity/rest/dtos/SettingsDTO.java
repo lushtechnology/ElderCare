@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.lushtech.eldercare.movinet.rest.dtos;
+package com.lushtech.eldercare.activity.rest.dtos;
 
 import com.google.gson.annotations.SerializedName;
 

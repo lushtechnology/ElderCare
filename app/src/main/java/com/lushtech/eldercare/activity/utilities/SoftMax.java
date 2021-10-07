@@ -1,4 +1,4 @@
-package com.lushtech.eldercare.movinet.utilities;
+package com.lushtech.eldercare.activity.utilities;
 
 import java.util.Arrays;
 import java.util.stream.DoubleStream;

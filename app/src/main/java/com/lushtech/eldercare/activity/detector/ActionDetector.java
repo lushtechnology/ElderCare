@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.lushtech.eldercare.movinet.detector;
+package com.lushtech.eldercare.activity.detector;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -22,10 +22,10 @@ import android.graphics.Color;
 import android.support.annotation.RawRes;
 import android.util.Log;
 import android.util.Size;
-import com.lushtech.eldercare.movinet.services.MainService;
-import com.lushtech.eldercare.movinet.utilities.ArgMax;
-import com.lushtech.eldercare.movinet.utilities.ResourceHelper;
-import com.lushtech.eldercare.movinet.utilities.SoftMax;
+import com.lushtech.eldercare.activity.utilities.ResourceHelper;
+import com.lushtech.eldercare.activity.utilities.SoftMax;
+import com.lushtech.eldercare.activity.services.MainService;
+import com.lushtech.eldercare.activity.utilities.ArgMax;
 import org.apache.commons.lang3.StringUtils;
 import org.tensorflow.lite.Interpreter;
 import org.tensorflow.lite.Tensor;
@@ -38,7 +38,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 

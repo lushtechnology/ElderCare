@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 
-package com.lushtech.eldercare.movinet.rest;
+package com.lushtech.eldercare.activity.rest;
 
 import android.graphics.Bitmap;
 import android.media.Image;
 
-import com.lushtech.eldercare.movinet.rest.dtos.SettingsDTO;
-import com.lushtech.eldercare.movinet.utilities.BitmapUtilities;
-import com.lushtech.eldercare.movinet.utilities.EasySharedPreference;
+import com.lushtech.eldercare.activity.rest.dtos.SettingsDTO;
+import com.lushtech.eldercare.activity.utilities.BitmapUtilities;
+import com.lushtech.eldercare.activity.utilities.EasySharedPreference;
 import com.securityandsafetythings.web_components.webserver.utilities.ProducesHeader;
 
 import javax.ws.rs.Consumes;

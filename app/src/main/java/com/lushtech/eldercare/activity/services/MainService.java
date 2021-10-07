@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.lushtech.eldercare.movinet.services;
+package com.lushtech.eldercare.activity.services;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -26,13 +26,13 @@ import android.os.Looper;
 import android.util.Log;
 import android.util.Size;
 import com.google.protobuf.ByteString;
-import com.lushtech.eldercare.movinet.detector.ActionDetector;
-import com.lushtech.eldercare.movinet.detector.ActionDetectorBuilder;
-import com.lushtech.eldercare.movinet.detector.Recognition;
-import com.lushtech.eldercare.movinet.rest.RestEndPoint;
-import com.lushtech.eldercare.movinet.utilities.BitmapUtilities;
-import com.lushtech.eldercare.movinet.utilities.EasySharedPreference;
-import com.lushtech.eldercare.movinet.utilities.Renderer;
+import com.lushtech.eldercare.activity.detector.ActionDetector;
+import com.lushtech.eldercare.activity.detector.ActionDetectorBuilder;
+import com.lushtech.eldercare.activity.detector.Recognition;
+import com.lushtech.eldercare.activity.rest.RestEndPoint;
+import com.lushtech.eldercare.activity.utilities.BitmapUtilities;
+import com.lushtech.eldercare.activity.utilities.EasySharedPreference;
+import com.lushtech.eldercare.activity.utilities.Renderer;
 import com.securityandsafetythings.Build;
 import com.securityandsafetythings.app.VideoService;
 import com.securityandsafetythings.jumpsuite.datatrolley.channels.Channel;
@@ -306,7 +306,8 @@ public class MainService extends VideoService {
          *       separate channel (mObjectsChannel.getChannelPathForJSONPayload()).
          */
         try {
-            //Log.d(LOGTAG,String.format("Publish results %s",mObjectsChannel.getChannelPath()));
+            //Log.d(LOGTAG,String.format("Publish results on channel %s",mObjectsChannel.getChannelPath()));
+            //Log.d(LOGTAG,String.format("Channel path for JSON Payload %s",mObjectsChannel.getChannelPathForJSONPayload()));
             mDataTrolley.send(mObjectsChannel, fp);
         } catch (InvalidFramePayloadException e) {
             Log.e(LOGTAG, "Failed to send FramePayload: " + fp, e);

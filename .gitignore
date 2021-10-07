@@ -2,3 +2,12 @@
 /webapp/build/
 /token.txt
 /webapp/node_modules/
+.gradle/
+.idea/
+app/release/
+build/
+webapp/.browserslistrc
+webapp/.editorconfig
+webapp/.env
+webapp/.eslintrc.js
+

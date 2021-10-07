@@ -14,13 +14,12 @@
  * limitations under the License.
  */
 
-package com.lushtech.eldercare.movinet.utilities;
+package com.lushtech.eldercare.activity.utilities;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
-import android.os.SystemClock;
-import com.lushtech.eldercare.movinet.detector.Recognition;
+import com.lushtech.eldercare.activity.detector.Recognition;
 
 import java.util.HashMap;
 import java.util.List;

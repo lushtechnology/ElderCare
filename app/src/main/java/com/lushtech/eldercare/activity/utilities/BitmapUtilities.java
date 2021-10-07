@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.lushtech.eldercare.movinet.utilities;
+package com.lushtech.eldercare.activity.utilities;
 
 import android.graphics.Bitmap;
 import android.graphics.PixelFormat;

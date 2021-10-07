@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.lushtech.eldercare.movinet;
+package com.lushtech.eldercare.activity;
 
 import android.app.Application;
 import android.content.Context;

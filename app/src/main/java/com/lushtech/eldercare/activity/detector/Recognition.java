@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.lushtech.eldercare.movinet.detector;
+package com.lushtech.eldercare.activity.detector;
 
 import java.util.Locale;
 

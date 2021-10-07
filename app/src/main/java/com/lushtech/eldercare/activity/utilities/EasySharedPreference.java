@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-package com.lushtech.eldercare.movinet.utilities;
+package com.lushtech.eldercare.activity.utilities;
 
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-import com.lushtech.eldercare.movinet.ElderCareApplication;
-import com.lushtech.eldercare.movinet.rest.dtos.SettingsDTO;
+import com.lushtech.eldercare.activity.ElderCareApplication;
+import com.lushtech.eldercare.activity.rest.dtos.SettingsDTO;
 
 /**
  * Base Shared Preference common definition
