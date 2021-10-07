@@ -11,3 +11,7 @@ webapp/.editorconfig
 webapp/.env
 webapp/.eslintrc.js
 
+/app/src/main/assets/website/js/app.8359b93d.js.map
+/app/src/main/assets/website/js/app.8359b93d.js
+/webapp/dist/js/app.8359b93d.js
+/webapp/dist/js/app.8359b93d.js.map
