@@ -17,7 +17,7 @@
 package com.lushtech.eldercare.activity.detector;
 
 import android.content.Context;
-import com.lushtech.eldercare.movinet.R;
+import com.lushtech.eldercare.activity.R;
 
 /**
  * Configures and builds an object detector
